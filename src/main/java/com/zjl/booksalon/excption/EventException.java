@@ -2,9 +2,6 @@ package com.zjl.booksalon.excption;
 
 /**
  * @author wenman
- * @Auther: ZJL
- * @Date: 2021/12/11 14:33
- * @Description:
  */
 public class EventException extends RuntimeException{
 

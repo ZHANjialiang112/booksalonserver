@@ -1,14 +1,27 @@
 package com.zjl.booksalon.commons.utils;
 
+import org.springframework.util.DigestUtils;
+
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author wenman
  * @Auther: ZJL
  * @Date: 2021/12/4 13:30
  * @Description:
  */
-public class StringUtils extends org.apache.commons.lang3.StringUtils{
+public class StringUtils extends org.apache.commons.lang3.StringUtils {
+
+    private final static String PASSWORD_SALT = "BOOKSALON";
 
     public static boolean isNotNull(Object data) {
-        return data == null;
+        return data != null;
+    }
+
+    public static String passwordMd5(String pwd) {
+        StringBuilder stringBuilder = new StringBuilder(pwd);
+        stringBuilder.append(PASSWORD_SALT);
+        String s = String.valueOf(stringBuilder);
+        return DigestUtils.md5DigestAsHex(s.getBytes(StandardCharsets.UTF_8));
     }
 }

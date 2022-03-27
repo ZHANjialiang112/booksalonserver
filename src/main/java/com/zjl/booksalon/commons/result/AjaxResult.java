@@ -1,4 +1,4 @@
-package com.zjl.booksalon.commons;
+package com.zjl.booksalon.commons.result;
 
 /**
  * @Auther: ZJL
@@ -6,8 +6,7 @@ package com.zjl.booksalon.commons;
  * @Description:
  */
 
-import cn.hutool.core.util.StrUtil;
-import org.springframework.http.HttpStatus;
+import com.zjl.booksalon.commons.utils.StringUtils;
 
 import java.util.HashMap;
 

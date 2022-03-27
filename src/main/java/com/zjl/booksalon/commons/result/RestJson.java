@@ -1,4 +1,4 @@
-package com.zjl.booksalon.commons.utils;
+package com.zjl.booksalon.commons.result;
 
 public class RestJson {
     private String code;

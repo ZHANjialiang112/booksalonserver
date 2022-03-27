@@ -1,6 +1,7 @@
 package com.zjl.booksalon.excption;
 
-import com.zjl.tokentest.comments.AjaxResult;
+
+import com.zjl.booksalon.commons.result.AjaxResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,7 +17,7 @@ import java.io.StringWriter;
  * @Date: 2021/12/11 14:17
  * @Description:
  */
-@ControllerAdvice(basePackages = {"com.zjl.tokentest.controller"})
+@ControllerAdvice(basePackages = {"com.zjl.booksalon.controller"})
 public class ExcptionHandler {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @ResponseBody
