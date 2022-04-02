@@ -3,7 +3,7 @@ package com.zjl.booksalon.entity;
 import java.io.Serializable;
 
 /**
- * userrole
+ * user_role
  *
  * @author
  */
@@ -11,7 +11,7 @@ public class UserRole implements Serializable {
     /**
      * 角色id
      */
-    private String roleid;
+    private String roleId;
 
     /**
      * user:普通用户/admin:管理员
@@ -25,12 +25,12 @@ public class UserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String getRoleid() {
-        return roleid;
+    public String getRoleId() {
+        return roleId;
     }
 
-    public void setRoleid(String roleid) {
-        this.roleid = roleid;
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 
     public String getRole() {
@@ -61,7 +61,7 @@ public class UserRole implements Serializable {
             return false;
         }
         UserRole other = (UserRole) that;
-        return (this.getRoleid() == null ? other.getRoleid() == null : this.getRoleid().equals(other.getRoleid()))
+        return (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
                 && (this.getRole() == null ? other.getRole() == null : this.getRole().equals(other.getRole()))
                 && (this.getPermission() == null ? other.getPermission() == null : this.getPermission().equals(other.getPermission()));
     }
@@ -70,7 +70,7 @@ public class UserRole implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getRoleid() == null) ? 0 : getRoleid().hashCode());
+        result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
         result = prime * result + ((getRole() == null) ? 0 : getRole().hashCode());
         result = prime * result + ((getPermission() == null) ? 0 : getPermission().hashCode());
         return result;
@@ -82,7 +82,7 @@ public class UserRole implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", roleid=").append(roleid);
+        sb.append(", roleId=").append(roleId);
         sb.append(", role=").append(role);
         sb.append(", permission=").append(permission);
         sb.append(", serialVersionUID=").append(serialVersionUID);

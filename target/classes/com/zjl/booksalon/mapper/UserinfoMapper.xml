@@ -1,149 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zjl.booksalon.mapper.UserinfoMapper">
+<mapper namespace="com.zjl.booksalon.mapper.UserInfoMapper">
   <resultMap id="BaseResultMap" type="com.zjl.booksalon.entity.UserInfo">
-    <id column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="imgurl" jdbcType="VARCHAR" property="imgurl" />
-    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
-    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
-    <result column="articlenum" jdbcType="INTEGER" property="articlenum" />
-    <result column="collectnum" jdbcType="INTEGER" property="collectnum" />
-    <result column="roleid" jdbcType="CHAR" property="roleid" />
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_imgurl" jdbcType="VARCHAR" property="userImgurl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="article_num" jdbcType="INTEGER" property="articleNum" />
+    <result column="collect_num" jdbcType="INTEGER" property="collectNum" />
+    <result column="role_id" jdbcType="CHAR" property="roleId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
   </resultMap>
   <sql id="Base_Column_List">
-    `uid`, email, `password`, imgurl, createtime, updatetime, articlenum, collectnum, 
-    roleid
+    user_id, user_email, user_password, user_imgurl, create_time, update_time, article_num, 
+    collect_num, role_id,nick_name
   </sql>
-  <select id="queryAllUser"  resultMap="BaseResultMap">
+  <select id="queryAllUser" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from user_info
+  </select>
+  <select id="selectByUserEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from userinfo
+    from user_info
+    where user_email = #{userEmail,jdbcType=VARCHAR}
   </select>
-
-  <select id="queryUserByeMail" parameterType="string" resultType="com.zjl.booksalon.entity.UserInfo">
-    select
-    <include refid="Base_Column_List"/>
-    from userinfo
-    where email = #{eMail}
-  </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from userinfo
-    where `uid` = #{uid,jdbcType=INTEGER}
+    delete from user_info
+    where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zjl.booksalon.entity.UserInfo">
-    insert into userinfo (`uid`, email, `password`, 
-      imgurl, createtime, updatetime, 
-      articlenum, collectnum, roleid
-      )
-    values (#{uid,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{imgurl,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
-      #{articlenum,jdbcType=INTEGER}, #{collectnum,jdbcType=INTEGER}, #{roleid,jdbcType=CHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.zjl.booksalon.entity.UserInfo">
-    insert into userinfo
+
+  <insert id="insertUserInfo" parameterType="com.zjl.booksalon.entity.UserInfo">
+    insert into user_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        `uid`,
+      <if test="userId != null">
+        user_id,
       </if>
-      <if test="email != null">
-        email,
+      <if test="userEmail != null">
+        user_email,
       </if>
-      <if test="password != null">
-        `password`,
+      <if test="userPassword != null">
+        user_password,
       </if>
-      <if test="imgurl != null">
-        imgurl,
+      <if test="userImgurl != null">
+        user_imgurl,
       </if>
-      <if test="createtime != null">
-        createtime,
+      <if test="createTime != null">
+        create_time,
       </if>
-      <if test="updatetime != null">
-        updatetime,
+        update_time,
+      <if test="articleNum != null">
+        article_num,
       </if>
-      <if test="articlenum != null">
-        articlenum,
+      <if test="collectNum != null">
+        collect_num,
       </if>
-      <if test="collectnum != null">
-        collectnum,
+      <if test="roleId != null">
+        role_id,
       </if>
-      <if test="roleid != null">
-        roleid,
+      <if test="nickName != null">
+        nick_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=INTEGER},
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
+      <if test="userEmail != null">
+        #{userEmail,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+      <if test="userPassword != null">
+        #{userPassword,jdbcType=VARCHAR},
       </if>
-      <if test="imgurl != null">
-        #{imgurl,jdbcType=VARCHAR},
+      <if test="userImgurl != null">
+        #{userImgurl,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
+        now(),
+      <if test="articleNum != null">
+        #{articleNum,jdbcType=INTEGER},
       </if>
-      <if test="articlenum != null">
-        #{articlenum,jdbcType=INTEGER},
+      <if test="collectNum != null">
+        #{collectNum,jdbcType=INTEGER},
       </if>
-      <if test="collectnum != null">
-        #{collectnum,jdbcType=INTEGER},
+      <if test="roleId != null">
+        #{roleId,jdbcType=CHAR},
       </if>
-      <if test="roleid != null">
-        #{roleid,jdbcType=CHAR},
+      <if test="nickName != null">
+        #{nickName,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zjl.booksalon.entity.UserInfo">
-    update userinfo
+  <update id="updateByUserEmail" parameterType="com.zjl.booksalon.entity.UserInfo">
+    update user_info
     <set>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
+      <if test="userEmail != null">
+        user_email = #{userEmail,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
-        `password` = #{password,jdbcType=VARCHAR},
+      <if test="userPassword != null">
+        user_password = #{userPassword,jdbcType=VARCHAR},
       </if>
-      <if test="imgurl != null">
-        imgurl = #{imgurl,jdbcType=VARCHAR},
+      <if test="userImgurl != null">
+        user_imgurl = #{userImgurl,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null">
-        createtime = #{createtime,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null">
-        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        update_time = now(),
       </if>
-      <if test="articlenum != null">
-        articlenum = #{articlenum,jdbcType=INTEGER},
+      <if test="articleNum != null">
+        article_num = #{articleNum,jdbcType=INTEGER},
       </if>
-      <if test="collectnum != null">
-        collectnum = #{collectnum,jdbcType=INTEGER},
+      <if test="collectNum != null">
+        collect_num = #{collectNum,jdbcType=INTEGER},
       </if>
-      <if test="roleid != null">
-        roleid = #{roleid,jdbcType=CHAR},
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=CHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=CHAR},
       </if>
     </set>
-    where `uid` = #{uid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zjl.booksalon.entity.UserInfo">
-    update userinfo
-    set email = #{email,jdbcType=VARCHAR},
-      `password` = #{password,jdbcType=VARCHAR},
-      imgurl = #{imgurl,jdbcType=VARCHAR},
-      createtime = #{createtime,jdbcType=TIMESTAMP},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      articlenum = #{articlenum,jdbcType=INTEGER},
-      collectnum = #{collectnum,jdbcType=INTEGER},
-      roleid = #{roleid,jdbcType=CHAR}
-    where `uid` = #{uid,jdbcType=INTEGER}
+    where user_email = #{userEmail,jdbcType=VARCHAR}
   </update>
 </mapper>

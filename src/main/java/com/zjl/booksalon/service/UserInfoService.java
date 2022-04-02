@@ -1,7 +1,7 @@
 package com.zjl.booksalon.service;
 
 import com.zjl.booksalon.entity.UserInfo;
-import com.zjl.booksalon.mapper.UserinfoMapper;
+import com.zjl.booksalon.mapper.UserInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,10 +14,10 @@ import java.util.List;
 public class UserInfoService {
 
     @Resource
-    private UserinfoMapper userinfoMapper;
+    private UserInfoMapper userInfoMapper;
 
     public List<UserInfo> queryAllUserList() {
-        List<UserInfo> userInfos = userinfoMapper.queryAllUser();
+        List<UserInfo> userInfos = userInfoMapper.queryAllUser();
         return userInfos;
     }
 

@@ -22,9 +22,14 @@ spring:
     test-on-borrow: true
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
-    host: localhost
+    host: 127.0.0.1
     port: 6379
     password: 1234
+  #分页pageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
 
 ---
 #生产环境

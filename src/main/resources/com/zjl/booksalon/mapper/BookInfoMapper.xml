@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjl.booksalon.mapper.BookInfoMapper">
+    <resultMap id="BaseResultMap" type="com.zjl.booksalon.entity.BookInfo">
+        <id column="book_id" jdbcType="INTEGER" property="bookId"/>
+        <result column="book_name" jdbcType="VARCHAR" property="bookName"/>
+        <result column="book_imgurl" jdbcType="VARCHAR" property="bookImgurl"/>
+        <result column="book_auther" jdbcType="VARCHAR" property="bookAuther"/>
+        <result column="collect_num" jdbcType="INTEGER" property="collectNum"/>
+        <result column="user_email" jdbcType="VARCHAR" property="userEmail"/>
+        <result column="bk_nick_name" jdbcType="VARCHAR" property="bkNickName"/>
+        <result column="is_submit" jdbcType="CHAR" property="isSubmit"/>
+        <result column="is_check_succ" jdbcType="CHAR" property="isCheckSucc"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="curr_user_collect" jdbcType="CHAR" property="currUserCollect"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zjl.booksalon.entity.BookInfoWithBLOBs">
+        <result column="book_intro" jdbcType="LONGVARCHAR" property="bookIntro"/>
+        <result column="book_perce" jdbcType="LONGVARCHAR" property="bookPerce"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        book_id
+        , book_name, book_imgurl, book_auther, collect_num, user_email, bk_nick_name,
+    is_submit, is_check_succ, create_time, update_time, curr_user_collect
+    </sql>
+    <sql id="Blob_Column_List">
+        book_intro
+        , book_perce
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from book_info
+        where book_id = #{bookId,jdbcType=INTEGER}
+    </select>
+    <select id="queryBookPage" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from book_info
+        <where>
+            <if test="isSubmit != null">
+                is_submit = #{isSubmit}
+            </if>
+            <if test="isCheckSucc != null">
+                and is_check_succ = #{isCheckSucc}
+            </if>
+            <if test="bookName != null">
+                and book_name like #{bookName}
+            </if>
+            <if test="bookAuther != null">
+                and book_auther like #{bookAuther}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from book_info
+        where book_id = #{bookId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insertNewBook" parameterType="com.zjl.booksalon.entity.BookInfoWithBLOBs">
+        insert into book_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bookId != null">
+                book_id,
+            </if>
+            <if test="bookName != null">
+                book_name,
+            </if>
+            <if test="bookImgurl != null">
+                book_imgurl,
+            </if>
+            <if test="bookAuther != null">
+                book_auther,
+            </if>
+            <if test="collectNum != null">
+                collect_num,
+            </if>
+            <if test="userEmail != null">
+                user_email,
+            </if>
+            <if test="bkNickName != null">
+                bk_nick_name,
+            </if>
+            <if test="isSubmit != null">
+                is_submit,
+            </if>
+            <if test="isCheckSucc != null">
+                is_check_succ,
+            </if>
+            create_time,
+            update_time,
+            <if test="currUserCollect != null">
+                curr_user_collect,
+            </if>
+            <if test="bookIntro != null">
+                book_intro,
+            </if>
+            <if test="bookPerce != null">
+                book_perce,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bookId != null">
+                #{bookId,jdbcType=INTEGER},
+            </if>
+            <if test="bookName != null">
+                #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookImgurl != null">
+                #{bookImgurl,jdbcType=VARCHAR},
+            </if>
+            <if test="bookAuther != null">
+                #{bookAuther,jdbcType=VARCHAR},
+            </if>
+            <if test="collectNum != null">
+                #{collectNum,jdbcType=INTEGER},
+            </if>
+            <if test="userEmail != null">
+                #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="bkNickName != null">
+                #{bkNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="isSubmit != null">
+                #{isSubmit,jdbcType=CHAR},
+            </if>
+            <if test="isCheckSucc != null">
+                #{isCheckSucc,jdbcType=CHAR},
+            </if>
+            now(),
+            now(),
+            <if test="currUserCollect != null">
+                #{currUserCollect,jdbcType=CHAR},
+            </if>
+            <if test="bookIntro != null">
+                #{bookIntro,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="bookPerce != null">
+                #{bookPerce,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zjl.booksalon.entity.BookInfoWithBLOBs">
+        update book_info
+        <set>
+            <if test="bookName != null">
+                book_name = #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookImgurl != null">
+                book_imgurl = #{bookImgurl,jdbcType=VARCHAR},
+            </if>
+            <if test="bookAuther != null">
+                book_auther = #{bookAuther,jdbcType=VARCHAR},
+            </if>
+            <if test="collectNum != null">
+                collect_num = #{collectNum,jdbcType=INTEGER},
+            </if>
+            <if test="userEmail != null">
+                user_email = #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="bkNickName != null">
+                bk_nick_name = #{bkNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="isSubmit != null">
+                is_submit = #{isSubmit,jdbcType=CHAR},
+            </if>
+            <if test="isCheckSucc != null">
+                is_check_succ = #{isCheckSucc,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            update_time = now(),
+            <if test="currUserCollect != null">
+                curr_user_collect = #{currUserCollect,jdbcType=CHAR},
+            </if>
+            <if test="bookIntro != null">
+                book_intro = #{bookIntro,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="bookPerce != null">
+                book_perce = #{bookPerce,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where book_id = #{bookId,jdbcType=INTEGER}
+    </update>
+
+</mapper>

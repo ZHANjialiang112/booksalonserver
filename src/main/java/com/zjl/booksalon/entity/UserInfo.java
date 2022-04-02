@@ -2,9 +2,10 @@ package com.zjl.booksalon.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
- * userinfo
+ * user_info
  *
  * @author
  */
@@ -12,178 +13,162 @@ public class UserInfo implements Serializable {
     /**
      * id,自增主键
      */
-    private Integer uid;
+    private Integer userId;
 
     /**
      * 用户邮箱
      */
-    private String email;
+    private String userEmail;
 
     /**
      * 密码
      */
-    private String password;
+    private String userPassword;
 
     /**
      * 用户头像地址
      */
-    private String imgurl;
+    private String userImgurl;
 
     /**
      * 创建时间
      */
-    private Date createtime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private Date updatetime;
+    private Date updateTime;
 
     /**
      * 文章数量
      */
-    private Integer articlenum;
+    private Integer articleNum;
 
     /**
      * 收藏文章数
      */
-    private Integer collectnum;
+    private Integer collectNum;
 
     /**
      * 用户角色（1:user/2:admin）
      */
-    private String roleid;
+    private String roleId;
+
+    private String nickName;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getUid() {
-        return uid;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
-    public String getImgurl() {
-        return imgurl;
+    public String getUserImgurl() {
+        return userImgurl;
     }
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
+    public void setUserImgurl(String userImgurl) {
+        this.userImgurl = userImgurl;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
-    public Date getUpdatetime() {
-        return updatetime;
-    }
-
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
-    }
-
-    public Integer getArticlenum() {
-        return articlenum;
-    }
-
-    public void setArticlenum(Integer articlenum) {
-        this.articlenum = articlenum;
-    }
-
-    public Integer getCollectnum() {
-        return collectnum;
-    }
-
-    public void setCollectnum(Integer collectnum) {
-        this.collectnum = collectnum;
-    }
-
-    public String getRoleid() {
-        return roleid;
-    }
-
-    public void setRoleid(String roleid) {
-        this.roleid = roleid;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override
-    public boolean equals(Object that) {
-        if (this == that) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (that == null) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        UserInfo other = (UserInfo) that;
-        return (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
-                && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
-                && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
-                && (this.getImgurl() == null ? other.getImgurl() == null : this.getImgurl().equals(other.getImgurl()))
-                && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
-                && (this.getUpdatetime() == null ? other.getUpdatetime() == null : this.getUpdatetime().equals(other.getUpdatetime()))
-                && (this.getArticlenum() == null ? other.getArticlenum() == null : this.getArticlenum().equals(other.getArticlenum()))
-                && (this.getCollectnum() == null ? other.getCollectnum() == null : this.getCollectnum().equals(other.getCollectnum()))
-                && (this.getRoleid() == null ? other.getRoleid() == null : this.getRoleid().equals(other.getRoleid()));
+        UserInfo userInfo = (UserInfo) o;
+        return Objects.equals(userId, userInfo.userId) && Objects.equals(userEmail, userInfo.userEmail) && Objects.equals(userPassword, userInfo.userPassword) && Objects.equals(userImgurl, userInfo.userImgurl) && Objects.equals(createTime, userInfo.createTime) && Objects.equals(updateTime, userInfo.updateTime) && Objects.equals(articleNum, userInfo.articleNum) && Objects.equals(collectNum, userInfo.collectNum) && Objects.equals(roleId, userInfo.roleId) && Objects.equals(nickName, userInfo.nickName);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getUid() == null) ? 0 : getUid().hashCode());
-        result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
-        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
-        result = prime * result + ((getImgurl() == null) ? 0 : getImgurl().hashCode());
-        result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
-        result = prime * result + ((getUpdatetime() == null) ? 0 : getUpdatetime().hashCode());
-        result = prime * result + ((getArticlenum() == null) ? 0 : getArticlenum().hashCode());
-        result = prime * result + ((getCollectnum() == null) ? 0 : getCollectnum().hashCode());
-        result = prime * result + ((getRoleid() == null) ? 0 : getRoleid().hashCode());
-        return result;
+        return Objects.hash(userId, userEmail, userPassword, userImgurl, createTime, updateTime, articleNum, collectNum, roleId, nickName);
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getArticleNum() {
+        return articleNum;
+    }
+
+    public void setArticleNum(Integer articleNum) {
+        this.articleNum = articleNum;
+    }
+
+    public Integer getCollectNum() {
+        return collectNum;
+    }
+
+    public void setCollectNum(Integer collectNum) {
+        this.collectNum = collectNum;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", uid=").append(uid);
-        sb.append(", email=").append(email);
-        sb.append(", password=").append(password);
-        sb.append(", imgurl=").append(imgurl);
-        sb.append(", createtime=").append(createtime);
-        sb.append(", updatetime=").append(updatetime);
-        sb.append(", articlenum=").append(articlenum);
-        sb.append(", collectnum=").append(collectnum);
-        sb.append(", roleid=").append(roleid);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "UserInfo{" +
+                "userId=" + userId +
+                ", userEmail='" + userEmail + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userImgurl='" + userImgurl + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", articleNum=" + articleNum +
+                ", collectNum=" + collectNum +
+                ", roleId='" + roleId + '\'' +
+                ", nickName='" + nickName + '\'' +
+                '}';
     }
 }

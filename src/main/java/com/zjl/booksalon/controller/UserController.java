@@ -32,24 +32,22 @@ public class UserController {
     }
 
     //用户登录接口
-    @CrossOrigin
     @PostMapping("/login")
     public AjaxResult login(@RequestBody UserInfo userInfo) {
         return loginService.login(userInfo);
     }
 
     //用户注册、修改账号密码操作获取对应验证码
-    @CrossOrigin
     @PostMapping("/getRegisterCode")
-    public AjaxResult register(@RequestBody UserInfo userInfo) {
-        return loginService.getRegisterCode(userInfo);
+    public AjaxResult register(@RequestBody UserInfo userInfo, @RequestParam("titleType") String titleType) {
+        return loginService.getRegisterCode(userInfo, titleType);
     }
 
     //验证用户注册，修改密码验证码是否正确，并进行数据库的持久化操作
-    @CrossOrigin
     @PostMapping("/updateAndRegister")
-    public AjaxResult updateUserInfo(@RequestBody UserInfo userInfo, @RequestParam("authCod") String authCode) {
-        return loginService.registerAndUpdate(userInfo, authCode);
+    public AjaxResult updateUserInfo(@RequestBody UserInfo userInfo, @RequestParam("authCod") String authCode,
+                                     @RequestParam("titleType") String titleType) {
+        return loginService.registerAndUpdate(userInfo, authCode, titleType);
     }
 
 }
