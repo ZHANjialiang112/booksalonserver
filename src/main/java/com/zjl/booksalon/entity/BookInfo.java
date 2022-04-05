@@ -50,7 +50,7 @@ public class BookInfo implements Serializable {
     private String isSubmit;
 
     /**
-     * 审核是否通过，审核通过用户可查看
+     * 审核是否通过，审核通过用户可查看（0:没通过，1：通过）
      */
     private String isCheckSucc;
 

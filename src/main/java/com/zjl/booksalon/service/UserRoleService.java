@@ -1,6 +1,10 @@
 package com.zjl.booksalon.service;
 
+import com.zjl.booksalon.entity.UserRole;
+import com.zjl.booksalon.mapper.UserRoleMapper;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @Auther: ZJL
@@ -9,4 +13,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserRoleService {
+    @Resource
+    private UserRoleMapper userRoleMapper;
+
+    public UserRole getUserRolePermission(String userEmail) {
+        return userRoleMapper.queryUserInfoPermission(userEmail);
+
+    }
+
 }

@@ -49,12 +49,25 @@
                 and is_check_succ = #{isCheckSucc}
             </if>
             <if test="bookName != null">
-                and book_name like #{bookName}
+                and book_name like concat('%',#{bookName},'%')
             </if>
             <if test="bookAuther != null">
-                and book_auther like #{bookAuther}
+                and book_auther like concat('%',#{bookAuther},'%')
             </if>
+            <choose>
+                <when test="bookName != null and bookAuther != null">
+                    and book_name like concat('%',#{bookName},'%')
+                    or book_auther like concat('%',#{bookAuther},'%')
+                </when>
+                <when test="bookName != null and bookAuther == null">
+                    and book_name like concat('%',#{bookName},'%')
+                </when>
+                <when test="bookName == null and bookAuther != null">
+                    and book_auther like concat('%',#{bookAuther},'%')
+                </when>
+            </choose>
         </where>
+        order by create_time desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete

@@ -7,8 +7,6 @@ import com.zjl.booksalon.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * @author wenman
  * @Auther: ZJL
@@ -25,10 +23,9 @@ public class UserController {
     @Autowired
     private LoginService loginService;
 
-    @GetMapping("/alluser")
-    public AjaxResult queryAllUserList() {
-        List<UserInfo> userInfos = userInfoService.queryAllUserList();
-        return AjaxResult.success("请求成功", userInfos);
+    @GetMapping("/getUser")
+    public AjaxResult queryUser(@RequestParam("userEmail") String userEmail) {
+        return userInfoService.queryUser(userEmail);
     }
 
     //用户登录接口

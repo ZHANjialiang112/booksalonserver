@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjl.booksalon.mapper.BookCommentMapper">
+    <resultMap id="BaseResultMap" type="com.zjl.booksalon.entity.BookComment">
+        <result column="book_id" jdbcType="INTEGER" property="bookId"/>
+        <result column="book_name" jdbcType="VARCHAR" property="bookName"/>
+        <result column="comm_nick_name" jdbcType="VARCHAR" property="commNickName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zjl.booksalon.entity.BookComment">
+        <result column="comment" jdbcType="LONGVARCHAR" property="comment"/>
+    </resultMap>
+    <sql id="Blob_Column_List">
+        `book_id`
+        , `book_name`, `comm_nick_name`, `create_time`, `nick_name`, `comment`
+    </sql>
+    <insert id="insert" parameterType="com.zjl.booksalon.entity.BookComment">
+        insert into book_comment (book_id, book_name, comm_nick_name,
+                                  create_time, nick_name, `comment`)
+        values (#{bookId,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{commNickName,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{nickName,jdbcType=VARCHAR}, #{comment,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zjl.booksalon.entity.BookComment">
+        insert into book_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bookId != null">
+                book_id,
+            </if>
+            <if test="bookName != null">
+                book_name,
+            </if>
+            <if test="commNickName != null">
+                comm_nick_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="nickName != null">
+                nick_name,
+            </if>
+            <if test="comment != null">
+                `comment`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bookId != null">
+                #{bookId,jdbcType=INTEGER},
+            </if>
+            <if test="bookName != null">
+                #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="commNickName != null">
+                #{commNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null">
+                #{comment,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="selectCommByBkName" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Blob_Column_List"/>
+        from book_comment
+        where book_name = #{bookName,jdbcType=VARCHAR}
+    </select>
+</mapper>

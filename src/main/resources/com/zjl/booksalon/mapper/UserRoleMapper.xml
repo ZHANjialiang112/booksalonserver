@@ -35,4 +35,11 @@
             </if>
         </trim>
     </insert>
+    <select id="queryUserInfoPermission" resultType="com.zjl.booksalon.entity.UserRole">
+        select b.permission, b.role
+        from user_info a,
+             user_role b
+        where a.role_id = b.role_id
+          and a.user_email = #{userEmail,jdbcType=VARCHAR}
+    </select>
 </mapper>

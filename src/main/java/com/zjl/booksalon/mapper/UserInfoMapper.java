@@ -1,15 +1,15 @@
 package com.zjl.booksalon.mapper;
 
 import com.zjl.booksalon.entity.UserInfo;
+import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
+@Mapper
 public interface UserInfoMapper {
     int deleteByPrimaryKey(Integer userId);
 
     int insertUserInfo(UserInfo record);
 
-    List<UserInfo> queryAllUser();
+    UserInfo queryUserByEmail(String userEmail);
 
     UserInfo selectByUserEmail(String userEmail);
 

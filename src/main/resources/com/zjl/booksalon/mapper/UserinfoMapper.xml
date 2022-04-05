@@ -18,10 +18,11 @@
     , user_email, user_password, user_imgurl, create_time, update_time, article_num,
     collect_num, role_id,nick_name
   </sql>
-  <select id="queryAllUser" resultMap="BaseResultMap">
+  <select id="queryUserByEmail" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from user_info
+    where user_email = #{userEmail}
   </select>
   <select id="selectByUserEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
