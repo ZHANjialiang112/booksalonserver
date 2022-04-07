@@ -1,12 +1,17 @@
 package com.zjl.booksalon.config;
 
+import com.zjl.booksalon.commons.filetr.ShiroFilter;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
+
 
 /**
  * @author wenman
@@ -21,6 +26,13 @@ public class ShiroConfig {
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager defaultWebSecurityManager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
+
+        //HashMap<String, Filter> filterHashMap = new HashMap<>(16);
+        //filterHashMap.put("jwt", new ShiroFilter());
+
+        Map<String, Filter> filterMap = new HashMap<>(16);
+        filterMap.put("jwt", new ShiroFilter());
+        bean.setFilters(filterMap);
         //设置安全管理器
         bean.setSecurityManager(defaultWebSecurityManager);
         //添加shiro的内置过滤器
@@ -36,13 +48,16 @@ public class ShiroConfig {
 //        filterChainMap.put("/user/update", "authc");
 //        可以使用通配符
 //        filterChainMap.put("/user/*", "authc");
-        filterChainMap.put("/user/admin", "perms[user:admin]");
-        filterChainMap.put("/user/add", "perms[user:edit]");
-        filterChainMap.put("/user/update", "perms[user:view]");
+        filterChainMap.put("/base", "anon");
+        filterChainMap.put("/**", "jwt");
+        //普通用户权限
+        filterChainMap.put("/user/user", "perms[per:user]");
+        //管理员权限
+        filterChainMap.put("/user/admin", "perms[per:admin]");
 
         bean.setFilterChainDefinitionMap(filterChainMap);
+        bean.setUnauthorizedUrl("/unauthor");
         bean.setLoginUrl("/toLogin");
-        //bean.setUnauthorizedUrl("/unauthor");
         return bean;
     }
 

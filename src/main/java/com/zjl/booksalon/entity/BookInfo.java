@@ -69,6 +69,19 @@ public class BookInfo implements Serializable {
      */
     private String currUserCollect;
 
+    /**
+     * 当前书籍被点赞数
+     */
+    private Integer commNum;
+
+    public Integer getCommNum() {
+        return commNum;
+    }
+
+    public void setCommNum(Integer commNum) {
+        this.commNum = commNum;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getBookId() {
@@ -190,7 +203,8 @@ public class BookInfo implements Serializable {
                 && (this.getIsCheckSucc() == null ? other.getIsCheckSucc() == null : this.getIsCheckSucc().equals(other.getIsCheckSucc()))
                 && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
                 && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-                && (this.getCurrUserCollect() == null ? other.getCurrUserCollect() == null : this.getCurrUserCollect().equals(other.getCurrUserCollect()));
+                && (this.getCurrUserCollect() == null ? other.getCurrUserCollect() == null : this.getCurrUserCollect().equals(other.getCurrUserCollect()))
+                && (this.getCommNum() == null ? other.getCommNum() == null : this.getCommNum().equals(other.getCommNum()));
     }
 
     @Override
@@ -209,6 +223,7 @@ public class BookInfo implements Serializable {
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getCurrUserCollect() == null) ? 0 : getCurrUserCollect().hashCode());
+        result = prime * result + ((getCommNum() == null) ? 0 : getCommNum().hashCode());
         return result;
     }
 
@@ -230,6 +245,7 @@ public class BookInfo implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", currUserCollect=").append(currUserCollect);
+        sb.append(", commNum=").append(commNum);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

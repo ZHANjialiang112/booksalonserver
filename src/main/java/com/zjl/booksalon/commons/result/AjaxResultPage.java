@@ -24,11 +24,11 @@ public class AjaxResultPage extends AjaxResult {
     //获取当前页信息
     public static AjaxResult success(PageInfo<?> pageInfo) {
         List<?> list = pageInfo.getList();
-        return AjaxResult.success(list).put("total", pageInfo.getTotal());
+        return AjaxResult.success(list).put("total", pageInfo.getTotal()).put("pageTotal", pageInfo.getPages());
     }
 
     public static AjaxResult success(String msg, PageInfo<?> pageInfo) {
-        return AjaxResult.success(msg, pageInfo.getList()).put("total", pageInfo.getTotal());
+        return AjaxResult.success(msg, pageInfo.getList()).put("total", pageInfo.getTotal()).put("pageTotal", pageInfo.getPages());
     }
 
 

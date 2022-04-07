@@ -25,5 +25,11 @@ public class BookCommService {
         return new PageInfo<>(commentList);
     }
 
+    //添加评论
+    public int addBookComm(BookComment bookComment) {
+        //TODO 添加书籍评论时，同时修改评论数（考虑使用事务完成）
+        return bookCommentMapper.insert(bookComment);
+    }
+
 
 }

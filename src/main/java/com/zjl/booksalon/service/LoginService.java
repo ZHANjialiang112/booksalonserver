@@ -1,11 +1,15 @@
 package com.zjl.booksalon.service;
 
 import com.zjl.booksalon.commons.result.AjaxResult;
+import com.zjl.booksalon.commons.utils.JWTUtil;
 import com.zjl.booksalon.commons.utils.StringUtils;
 import com.zjl.booksalon.entity.UserInfo;
 import com.zjl.booksalon.mapper.UserInfoMapper;
 import com.zjl.booksalon.service.commons.RedisTemplateService;
 import com.zjl.booksalon.service.commons.SendMailMessages;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,7 +39,17 @@ public class LoginService {
             return AjaxResult.error("该用户还没有注册，请先注册！");
         }
         if (resultUser.getUserPassword().equals(StringUtils.passwordMd5(userInfo.getUserPassword()))) {
-            return AjaxResult.success("登录成功，欢迎你~");
+            Subject subject = SecurityUtils.getSubject();
+            try {
+                UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userInfo.getUserEmail(),
+                        StringUtils.passwordMd5(userInfo.getUserPassword()));
+                subject.login(usernamePasswordToken);
+            } catch (Exception e) {
+                return AjaxResult.error(e.getMessage());
+            }
+            String token = JWTUtil.getToken(userInfo);
+            redisService.saveToken(userInfo.getUserEmail(), token);
+            return AjaxResult.success("登录成功，欢迎你~", token);
         }
         return AjaxResult.error("登录失败，请检查账号和密码~");
     }

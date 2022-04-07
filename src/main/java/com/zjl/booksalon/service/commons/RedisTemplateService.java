@@ -29,6 +29,13 @@ public class RedisTemplateService {
         operations.set(key, value, 60, TimeUnit.SECONDS);
     }
 
+    public void saveToken(String key, String value) {
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        template.setKeySerializer(stringRedisSerializer);
+        ValueOperations<String, String> operations = template.opsForValue();
+        operations.set(key, value, 11, TimeUnit.HOURS);
+    }
+
     public String get(String key) {
         ValueOperations<String, String> operations = template.opsForValue();
         return operations.get(key);

@@ -13,7 +13,11 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Arrays;
 
 /**
  * @author wenman
@@ -22,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Description:
  */
 public class UserRealm extends AuthorizingRealm {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UserRoleService userRoleService;
@@ -61,6 +66,7 @@ public class UserRealm extends AuthorizingRealm {
     }
 
 
+
     /**
      * Retrieves authentication data from an implementation-specific datasource (RDBMS, LDAP, etc) for the given
      * authentication token.
@@ -77,18 +83,28 @@ public class UserRealm extends AuthorizingRealm {
      * @throws AuthenticationException if there is an error acquiring data or performing
      *                                 realm-specific authentication logic for the specified <tt>token</tt>
      */
-//    认证
+
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof UsernamePasswordToken;
+    }
+
+    //    认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         //获取当前的用户
         UsernamePasswordToken userToken = (UsernamePasswordToken) token;
 //        封装用户的登录数据
         UserInfo userInfo = userInfoMapper.selectByUserEmail(userToken.getUsername());
+        String s = Arrays.toString(userToken.getPassword());
         if (userInfo == null) {
             throw new EventException(HttpStatus.BAD_REQUEST, "用户不存在，请确认账号是否正确！");
-        } else if (userInfo.getUserPassword().equals(new String(userToken.getPassword()))) {
+        } else if (userInfo.getUserPassword().equals(s)) {
+            logger.info("密码校验出错！");
             throw new EventException(HttpStatus.BAD_REQUEST, "密码不匹配，请确认密码正确！");
         }
+
+
         //发送认证信息{principal:要义;credentials:证书;realmName:领域名称}
 //        new SimpleAuthenticationInfo(Object principal, Object credentials, String realmName)
 //        如果要把对应的用户传到授权的环节，就要在principal上放置user

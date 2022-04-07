@@ -24,4 +24,9 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         String s = String.valueOf(stringBuilder);
         return DigestUtils.md5DigestAsHex(s.getBytes(StandardCharsets.UTF_8));
     }
+
+    public static boolean isMatch(String url) {
+        //判断url请求中是否以/base路径开始
+        return url.startsWith("/base");
+    }
 }

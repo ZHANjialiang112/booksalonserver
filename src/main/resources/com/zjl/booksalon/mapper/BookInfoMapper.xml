@@ -7,6 +7,7 @@
         <result column="book_imgurl" jdbcType="VARCHAR" property="bookImgurl"/>
         <result column="book_auther" jdbcType="VARCHAR" property="bookAuther"/>
         <result column="collect_num" jdbcType="INTEGER" property="collectNum"/>
+        <result column="comm_num" jdbcType="INTEGER" property="commNum"/>
         <result column="user_email" jdbcType="VARCHAR" property="userEmail"/>
         <result column="bk_nick_name" jdbcType="VARCHAR" property="bkNickName"/>
         <result column="is_submit" jdbcType="CHAR" property="isSubmit"/>
@@ -21,7 +22,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         book_id
-        , book_name, book_imgurl, book_auther, collect_num, user_email, bk_nick_name,
+        , book_name, book_imgurl, book_auther, collect_num,comm_num, user_email, bk_nick_name,
     is_submit, is_check_succ, create_time, update_time, curr_user_collect
     </sql>
     <sql id="Blob_Column_List">
@@ -92,6 +93,9 @@
             <if test="collectNum != null">
                 collect_num,
             </if>
+            <if test="commNum != null">
+                comm_num,
+            </if>
             <if test="userEmail != null">
                 user_email,
             </if>
@@ -132,6 +136,9 @@
             <if test="collectNum != null">
                 #{collectNum,jdbcType=INTEGER},
             </if>
+            <if test="commNum != null">
+                #{commNum,jdbcType=INTEGER},
+            </if>
             <if test="userEmail != null">
                 #{userEmail,jdbcType=VARCHAR},
             </if>
@@ -171,6 +178,9 @@
             </if>
             <if test="collectNum != null">
                 collect_num = #{collectNum,jdbcType=INTEGER},
+            </if>
+            <if test="commNum != null">
+                comm_num = #{collectNum,jdbcType=INTEGER},
             </if>
             <if test="userEmail != null">
                 user_email = #{userEmail,jdbcType=VARCHAR},
