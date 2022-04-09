@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjl.booksalon.mapper.BookCollectMapper">
+    <resultMap id="BaseResultMap" type="com.zjl.booksalon.entity.BookCollect">
+        <result column="coll_user_id" jdbcType="INTEGER" property="collUserId"/>
+        <result column="bct_book_id" jdbcType="INTEGER" property="bctBookId"/>
+        <result column="bct_user_id" jdbcType="INTEGER" property="bctUserId"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.zjl.booksalon.entity.BookCollect">
+        insert into book_collect (coll_user_id, bct_book_id, bct_user_id)
+        values (#{collUserId,jdbcType=INTEGER}, #{bctBookId,jdbcType=INTEGER}, #{bctUserId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zjl.booksalon.entity.BookCollect">
+        insert into book_collect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="collUserId != null">
+                coll_user_id,
+            </if>
+            <if test="bctBookId != null">
+                bct_book_id,
+            </if>
+            <if test="bctUserId != null">
+                bct_user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="collUserId != null">
+                #{collUserId,jdbcType=INTEGER},
+            </if>
+            <if test="bctBookId != null">
+                #{bctBookId,jdbcType=INTEGER},
+            </if>
+            <if test="bctUserId != null">
+                #{bctUserId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <delete id="deleteCollect">
+        delete from book_collect
+        where coll_user_id = #{collUserId,jdbcType=INTEGER}
+        and bct_book_id = #{bctBookId,jdbcType=INTEGER}
+        <if test="bctUserId != null and bctUserId != ''">
+            and bct_user_id = #{bctUserId,jdbcType=INTEGER}
+        </if>
+    </delete>
+    <select id="queryCollectStatus" resultType="java.lang.Integer">
+        select count(*) from book_collect
+        where coll_user_id = #{collUserId,jdbcType=INTEGER}
+        and bct_book_id = #{bctBookId,jdbcType=INTEGER}
+        <if test="bctUserId != null and bctUserId != ''">
+            and bct_user_id = #{bctUserId,jdbcType=INTEGER}
+        </if>
+    </select>
+</mapper>

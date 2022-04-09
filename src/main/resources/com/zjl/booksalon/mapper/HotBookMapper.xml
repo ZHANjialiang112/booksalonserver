@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjl.booksalon.mapper.HotBookMapper">
+    <resultMap id="BaseResultMap" type="com.zjl.booksalon.entity.HotBook">
+        <result column="ht_book_id" jdbcType="INTEGER" property="htBookId"/>
+        <result column="is_hot" jdbcType="CHAR" property="isHot"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.zjl.booksalon.entity.HotBook">
+        insert into hot_book (ht_book_id, is_hot)
+        values (#{htBookId,jdbcType=INTEGER}, #{isHot,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zjl.booksalon.entity.HotBook">
+        insert into hot_book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="htBookId != null">
+                ht_book_id,
+            </if>
+            <if test="isHot != null">
+                is_hot,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="htBookId != null">
+                #{htBookId,jdbcType=INTEGER},
+            </if>
+            <if test="isHot != null">
+                #{isHot,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

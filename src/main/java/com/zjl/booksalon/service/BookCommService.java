@@ -2,8 +2,11 @@ package com.zjl.booksalon.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zjl.booksalon.commons.result.AjaxResult;
 import com.zjl.booksalon.entity.BookComment;
+import com.zjl.booksalon.entity.BookInfo;
 import com.zjl.booksalon.mapper.BookCommentMapper;
+import com.zjl.booksalon.mapper.BookInfoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,6 +21,9 @@ import java.util.List;
 public class BookCommService {
     @Resource
     private BookCommentMapper bookCommentMapper;
+    @Resource
+    private BookInfoMapper bookInfoMapper;
+
 
     public PageInfo<BookComment> getBookAllcomm(String bookName, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -26,9 +32,12 @@ public class BookCommService {
     }
 
     //添加评论
-    public int addBookComm(BookComment bookComment) {
-        //TODO 添加书籍评论时，同时修改评论数（考虑使用事务完成）
-        return bookCommentMapper.insert(bookComment);
+    public AjaxResult addBookComm(BookComment bookComment) {
+        BookInfo bookInfo = new BookInfo();
+        bookInfo.setBookId(bookComment.getBookId());
+        bookInfoMapper.updateBookCommCount(bookInfo);
+        bookCommentMapper.insert(bookComment);
+        return AjaxResult.success();
     }
 
 

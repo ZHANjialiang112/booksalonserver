@@ -3,7 +3,6 @@ package com.zjl.booksalon.controller;
 import com.zjl.booksalon.commons.result.AjaxResult;
 import com.zjl.booksalon.commons.result.AjaxResultPage;
 import com.zjl.booksalon.commons.result.HttpStatus;
-import com.zjl.booksalon.entity.BookInfo;
 import com.zjl.booksalon.entity.UserInfo;
 import com.zjl.booksalon.service.BookCommService;
 import com.zjl.booksalon.service.BookService;
@@ -39,10 +38,18 @@ public class BaseController {
         return AjaxResultPage.success(bookCommService.getBookAllcomm(bookName, pageNum, pageSize));
     }
 
+    //书籍推荐列表
     @PostMapping("/getBookPage")
-    public AjaxResult queryBookpage(@RequestBody BookInfo bookInfo, @RequestParam("pageNum") int pageNum,
-                                    @RequestParam("pageSize") int pageSize) {
-        return AjaxResultPage.success(bookService.getBookPage(bookInfo, pageNum, pageSize));
+    public AjaxResult queryBookpage(@RequestParam("search") String search, @RequestParam("pageNum") int pageNum,
+                                    @RequestParam("pageSize") int pageSize, @RequestParam("userId") String userId) {
+        return AjaxResultPage.success(bookService.getBookPage(search, pageNum, pageSize, userId));
+    }
+
+    //获取书籍热榜
+    @PostMapping("/getHotBook")
+    public AjaxResult getHotBookPage(@RequestParam("search") String search, @RequestParam("pageNum") int pageNum,
+                                     @RequestParam("pageSize") int pageSize, @RequestParam("userId") String userId) {
+        return AjaxResultPage.success(bookService.getHotBookPage(search, pageNum, pageSize, userId));
     }
 
     //用户登录接口

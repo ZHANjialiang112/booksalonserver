@@ -2,6 +2,7 @@ package com.zjl.booksalon.mapper;
 
 import com.zjl.booksalon.entity.BookInfo;
 import com.zjl.booksalon.entity.BookInfoWithBLOBs;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,6 +15,10 @@ public interface BookInfoMapper {
 
     int updateByPrimaryKeySelective(BookInfoWithBLOBs record);
 
-    List<BookInfoWithBLOBs> queryBookPage(BookInfo bookInfo);
+    int updateBookCommCount(BookInfo bookInfo);
+
+    List<BookInfoWithBLOBs> queryBookPage(@Param("search") String search);
+
+    List<BookInfoWithBLOBs> queryHotBookPage(@Param("search") String search);
 
 }

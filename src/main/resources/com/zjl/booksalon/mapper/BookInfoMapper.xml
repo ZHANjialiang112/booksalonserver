@@ -42,33 +42,29 @@
         <include refid="Base_Column_List"/>,
         <include refid="Blob_Column_List"/>
         from book_info
-        <where>
-            <if test="isSubmit != null">
-                is_submit = #{isSubmit}
-            </if>
-            <if test="isCheckSucc != null">
-                and is_check_succ = #{isCheckSucc}
-            </if>
-            <if test="bookName != null">
-                and book_name like concat('%',#{bookName},'%')
-            </if>
-            <if test="bookAuther != null">
-                and book_auther like concat('%',#{bookAuther},'%')
-            </if>
-            <choose>
-                <when test="bookName != null and bookAuther != null">
-                    and book_name like concat('%',#{bookName},'%')
-                    or book_auther like concat('%',#{bookAuther},'%')
-                </when>
-                <when test="bookName != null and bookAuther == null">
-                    and book_name like concat('%',#{bookName},'%')
-                </when>
-                <when test="bookName == null and bookAuther != null">
-                    and book_auther like concat('%',#{bookAuther},'%')
-                </when>
-            </choose>
-        </where>
+        where is_submit = '1' and is_check_succ = '1'
+        <choose>
+            <when test="search != null and search != ''">
+                and book_name like concat('%',#{search},'%')
+                or book_auther like concat('%',#{search},'%')
+            </when>
+        </choose>
+
         order by create_time desc
+    </select>
+    <select id="queryHotBookPage" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from book_info inner join hot_book on book_id = ht_book_id
+        and is_submit = '1' and is_check_succ = '1'
+        <choose>
+            <when test="search != null and search != ''">
+                and book_name like concat('%',#{search},'%')
+                or book_auther like concat('%',#{search},'%')
+            </when>
+        </choose>
+        order by collect_num desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
@@ -207,6 +203,13 @@
             <if test="bookPerce != null">
                 book_perce = #{bookPerce,jdbcType=LONGVARCHAR},
             </if>
+        </set>
+        where book_id = #{bookId,jdbcType=INTEGER}
+    </update>
+    <update id="updateBookCommCount">
+        update book_info
+        <set>
+            comm_num = comm_num +1
         </set>
         where book_id = #{bookId,jdbcType=INTEGER}
     </update>
