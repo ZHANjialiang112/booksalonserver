@@ -15,4 +15,6 @@ public interface UserInfoMapper {
 
     int updateByUserEmail(UserInfo record);
 
+    int updateUserCollectNum(int userId, int count);
+
 }

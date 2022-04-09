@@ -6,10 +6,6 @@
         <result column="bct_book_id" jdbcType="INTEGER" property="bctBookId"/>
         <result column="bct_user_id" jdbcType="INTEGER" property="bctUserId"/>
     </resultMap>
-    <insert id="insert" parameterType="com.zjl.booksalon.entity.BookCollect">
-        insert into book_collect (coll_user_id, bct_book_id, bct_user_id)
-        values (#{collUserId,jdbcType=INTEGER}, #{bctBookId,jdbcType=INTEGER}, #{bctUserId,jdbcType=INTEGER})
-    </insert>
     <insert id="insertSelective" parameterType="com.zjl.booksalon.entity.BookCollect">
         insert into book_collect
         <trim prefix="(" suffix=")" suffixOverrides=",">

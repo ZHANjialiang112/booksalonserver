@@ -3,8 +3,8 @@ package com.zjl.booksalon.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zjl.booksalon.commons.result.AjaxResult;
+import com.zjl.booksalon.commons.utils.StringUtils;
 import com.zjl.booksalon.entity.BookComment;
-import com.zjl.booksalon.entity.BookInfo;
 import com.zjl.booksalon.mapper.BookCommentMapper;
 import com.zjl.booksalon.mapper.BookInfoMapper;
 import org.springframework.stereotype.Service;
@@ -33,9 +33,7 @@ public class BookCommService {
 
     //添加评论
     public AjaxResult addBookComm(BookComment bookComment) {
-        BookInfo bookInfo = new BookInfo();
-        bookInfo.setBookId(bookComment.getBookId());
-        bookInfoMapper.updateBookCommCount(bookInfo);
+        bookInfoMapper.updateBookCommCount(bookComment.getBookId(), StringUtils.USER_ADD_COLLECT);
         bookCommentMapper.insert(bookComment);
         return AjaxResult.success();
     }

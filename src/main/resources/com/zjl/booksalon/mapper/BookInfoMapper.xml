@@ -66,6 +66,22 @@
         </choose>
         order by collect_num desc
     </select>
+    <select id="queryUserCollBook" resultType="com.zjl.booksalon.entity.BookInfoWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from book_info inner join book_collect on book_id = bct_book_id
+        and coll_user_id = #{collUserId,jdbcType=INTEGER}
+        order by create_time desc
+    </select>
+    <select id="queryUserAllBook" resultType="com.zjl.booksalon.entity.BookInfoWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from book_info
+        where user_email = #{userEmail,jdbcType=VARCHAR}
+        order by create_time desc
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from book_info
@@ -208,10 +224,15 @@
     </update>
     <update id="updateBookCommCount">
         update book_info
-        <set>
-            comm_num = comm_num +1
-        </set>
-        where book_id = #{bookId,jdbcType=INTEGER}
+        <choose>
+            <when test="count == 1">
+                set comm_num = comm_num + 1
+            </when>
+            <when test="count == -1">
+                set comm_num = comm_num - 1
+            </when>
+        </choose>
+        where book_id = #{bookId}
     </update>
 
 </mapper>

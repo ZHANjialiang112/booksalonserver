@@ -23,7 +23,9 @@ public class BookService {
     @Resource
     private BookCollectMapper bookCollectMapper;
 
-    //查询推荐页书籍信息用户是否已经收藏
+    /**
+     * 查询推荐页书籍信息用户是否已经收藏
+     */
     public PageInfo<BookInfoWithBLOBs> getBookPage(String search, int pageNum, int pageSize, String userId) {
         PageHelper.startPage(pageNum, pageSize);
         PageInfo<BookInfoWithBLOBs> bookPage = new PageInfo<>(bookInfoMapper.queryBookPage(search));
@@ -42,7 +44,9 @@ public class BookService {
         return bookPage;
     }
 
-    //查询hot页书籍信息用户是否已经收藏
+    /**
+     * 查询hot页书籍信息用户是否已经收藏
+     */
     public PageInfo<BookInfoWithBLOBs> getHotBookPage(String search, int pageNum, int pageSize, String userId) {
         PageHelper.startPage(pageNum, pageSize);
         PageInfo<BookInfoWithBLOBs> hotBookPage = new PageInfo<>(bookInfoMapper.queryHotBookPage(search));
@@ -59,4 +63,10 @@ public class BookService {
         }
         return hotBookPage;
     }
+
+    public PageInfo<BookInfoWithBLOBs> getUserAllBook(String userEmail, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(bookInfoMapper.queryUserAllBook(userEmail));
+    }
+
 }

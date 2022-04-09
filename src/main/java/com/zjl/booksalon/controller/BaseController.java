@@ -11,6 +11,8 @@ import com.zjl.booksalon.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @Auther: ZJL
  * @Date: 2022/4/7 11:29
@@ -71,18 +73,38 @@ public class BaseController {
         return loginService.registerAndUpdate(userInfo, authCode, titleType);
     }
 
+    //没有权限，提醒用户登录
     @RequestMapping("/toLogin")
     public AjaxResult toLogin() {
         return AjaxResult.error(HttpStatus.UNAUTHORIZED, "请先登录");
     }
 
+    //提醒用户没有操作权限
     @RequestMapping("/unauthor")
     public AjaxResult unauthor() {
         return AjaxResult.error(HttpStatus.UNAUTHORIZED, "没有权限");
     }
 
+    //获取完整 用户信息
     @GetMapping("/getUser")
     public AjaxResult queryUser(@RequestParam("userEmail") String userEmail) {
         return userInfoService.queryUser(userEmail);
     }
+
+    //过滤用户没有登录的请求
+    @RequestMapping("/filterNoLogin")
+    public AjaxResult filterRemind(HttpServletRequest request) {
+        String msg = request.getAttribute("msg").toString();
+        request.removeAttribute("msg");
+        return AjaxResult.error(HttpStatus.UNAUTHORIZED, msg);
+    }
+
+    @RequestMapping("/filterErrorToken")
+    public AjaxResult filterErrorToken(HttpServletRequest request) {
+        String msg = request.getAttribute("msg").toString();
+        request.removeAttribute("msg");
+        return AjaxResult.error(HttpStatus.UNAUTHORIZED, msg);
+    }
+
+
 }

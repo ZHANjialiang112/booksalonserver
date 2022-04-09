@@ -1,5 +1,8 @@
 package com.zjl.booksalon.commons.filetr;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zjl.booksalon.commons.result.AjaxResult;
+import com.zjl.booksalon.commons.result.HttpStatus;
 import com.zjl.booksalon.commons.utils.JWTUtil;
 import com.zjl.booksalon.commons.utils.SpringUtils;
 import com.zjl.booksalon.commons.utils.StringUtils;
@@ -48,6 +51,11 @@ public class ShiroFilter extends BasicHttpAuthenticationFilter {
 
         //没有token
         if (StringUtils.isEmpty(token)) {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json; charset=utf-8");
+            AjaxResult ajaxResult = AjaxResult.error(HttpStatus.UNAUTHORIZED, "请先登录后再操作！");
+            String s = new ObjectMapper().writeValueAsString(ajaxResult);
+            response.getWriter().print(s);
             logger.error("请求路径==：" + login + "没有token");
             return false;
         }
@@ -65,6 +73,11 @@ public class ShiroFilter extends BasicHttpAuthenticationFilter {
             logger.info("请求路径==：" + login + "通过过滤");
             return true;
         } else {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json; charset=utf-8");
+            AjaxResult ajaxResult = AjaxResult.error(HttpStatus.UNAUTHORIZED, "登录已过期，请重新登录！");
+            String s = new ObjectMapper().writeValueAsString(ajaxResult);
+            response.getWriter().print(s);
             logger.error("请求路径==：" + login + "无效token");
         }
         return false;

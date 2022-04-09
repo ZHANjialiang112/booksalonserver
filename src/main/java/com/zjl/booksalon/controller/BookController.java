@@ -1,8 +1,12 @@
 package com.zjl.booksalon.controller;
 
+import com.zjl.booksalon.commons.result.AjaxResult;
+import com.zjl.booksalon.commons.result.AjaxResultPage;
 import com.zjl.booksalon.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,9 +20,9 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    //@PostMapping("/getBookPage")
-    //public AjaxResult queryBookpage(@RequestBody BookInfo bookInfo, @RequestParam("pageNum") int pageNum,
-    //                                @RequestParam("pageSize") int pageSize) {
-    //    return AjaxResultPage.success(bookService.getBookPage(bookInfo, pageNum, pageSize));
-    //}
+    @PostMapping("/getUserBook")
+    public AjaxResult queryBookpage(@RequestParam("userEmail") String userEmail, @RequestParam("pageNum") int pageNum,
+                                    @RequestParam("pageSize") int pageSize) {
+        return AjaxResultPage.success(bookService.getUserAllBook(userEmail, pageNum, pageSize));
+    }
 }
