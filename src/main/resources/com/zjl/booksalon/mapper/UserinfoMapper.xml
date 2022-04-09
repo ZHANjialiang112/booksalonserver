@@ -132,4 +132,16 @@
     </set>
     where user_email = #{userEmail,jdbcType=VARCHAR}
   </update>
+  <update id="updateUserCollectNum">
+    update user_info
+    <choose>
+      <when test="count == 1">
+        set collect_num = collect_num + 1
+      </when>
+      <when test="count == -1">
+        set collect_num = collect_num - 1
+      </when>
+    </choose>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
 </mapper>
