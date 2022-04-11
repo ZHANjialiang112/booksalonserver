@@ -144,4 +144,17 @@
     </choose>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
+
+  <update id="updateUserArticleNum">
+    update user_info
+    <choose>
+      <when test="count == 1">
+        set article_num = article_num + 1
+      </when>
+      <when test="count == -1">
+        set article_num = article_num - 1
+      </when>
+    </choose>
+    where user_email = #{userEmail,jdbcType=VARCHAR}
+  </update>
 </mapper>

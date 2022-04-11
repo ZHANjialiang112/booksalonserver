@@ -37,26 +37,32 @@
         from book_info
         where book_id = #{bookId,jdbcType=INTEGER}
     </select>
-    <select id="queryBookPage" resultMap="ResultMapWithBLOBs">
+    <select id="queryBookPage" resultType="com.zjl.booksalon.vo.BookVo">
         select
-        <include refid="Base_Column_List"/>,
+        user_imgurl,
+        book_id
+        , book_name, book_imgurl, book_auther, book_info.collect_num,comm_num, book_info.user_email, bk_nick_name,
+        is_submit, is_check_succ, book_info.create_time, book_info.update_time, curr_user_collect,
         <include refid="Blob_Column_List"/>
-        from book_info
-        where is_submit = '1' and is_check_succ = '1'
+        from book_info inner join user_info on book_info.user_email = user_info.user_email
+        and book_info.is_submit = '1' and book_info.is_check_succ = '1'
         <choose>
             <when test="search != null and search != ''">
                 and book_name like concat('%',#{search},'%')
                 or book_auther like concat('%',#{search},'%')
             </when>
         </choose>
-
         order by create_time desc
     </select>
-    <select id="queryHotBookPage" resultMap="ResultMapWithBLOBs">
+    <select id="queryHotBookPage" resultType="com.zjl.booksalon.vo.BookVo">
         select
-        <include refid="Base_Column_List"/>,
+        user_imgurl,
+        book_id
+        , book_name, book_imgurl, book_auther, book_info.collect_num,comm_num, book_info.user_email, bk_nick_name,
+        is_submit, is_check_succ, book_info.create_time, book_info.update_time, curr_user_collect,
         <include refid="Blob_Column_List"/>
-        from book_info inner join hot_book on book_id = ht_book_id
+        from (book_info inner join hot_book on book_id = ht_book_id) inner join user_info on book_info.user_email =
+        user_info.user_email
         and is_submit = '1' and is_check_succ = '1'
         <choose>
             <when test="search != null and search != ''">
@@ -66,20 +72,27 @@
         </choose>
         order by collect_num desc
     </select>
-    <select id="queryUserCollBook" resultType="com.zjl.booksalon.entity.BookInfoWithBLOBs">
+    <select id="queryUserCollBook" resultType="com.zjl.booksalon.vo.BookVo">
         select
-        <include refid="Base_Column_List"/>,
+        user_imgurl,
+        book_id
+        , book_name, book_imgurl, book_auther, book_info.collect_num,comm_num, book_info.user_email, bk_nick_name,
+        is_submit, is_check_succ, book_info.create_time, book_info.update_time, curr_user_collect,
         <include refid="Blob_Column_List"/>
-        from book_info inner join book_collect on book_id = bct_book_id
+        from (book_info inner join book_collect on book_id = bct_book_id) inner join user_info on book_info.user_email =
+        user_info.user_email
         and coll_user_id = #{collUserId,jdbcType=INTEGER}
         order by create_time desc
     </select>
-    <select id="queryUserAllBook" resultType="com.zjl.booksalon.entity.BookInfoWithBLOBs">
+    <select id="queryUserAllBook" resultType="com.zjl.booksalon.vo.BookVo">
         select
-        <include refid="Base_Column_List"/>,
+        user_imgurl,
+        book_id
+        , book_name, book_imgurl, book_auther, book_info.collect_num,comm_num, book_info.user_email, bk_nick_name,
+        is_submit, is_check_succ, book_info.create_time, book_info.update_time, curr_user_collect,
         <include refid="Blob_Column_List"/>
-        from book_info
-        where user_email = #{userEmail,jdbcType=VARCHAR}
+        from book_info inner join user_info on book_info.user_email = user_info.user_email
+        and book_info.user_email = #{userEmail,jdbcType=VARCHAR}
         order by create_time desc
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -230,6 +243,18 @@
             </when>
             <when test="count == -1">
                 set comm_num = comm_num - 1
+            </when>
+        </choose>
+        where book_id = #{bookId}
+    </update>
+    <update id="updateBookCollCount">
+        update book_info
+        <choose>
+            <when test="count == 1">
+                set collect_num = collect_num + 1
+            </when>
+            <when test="count == -1">
+                set collect_num = collect_num - 1
             </when>
         </choose>
         where book_id = #{bookId}

@@ -14,8 +14,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     private final static String PASSWORD_SALT = "BOOKSALON";
 
-    public static final int USER_ADD_COLLECT = 1;
-    public static final int USER_CANCEL_COLLECT = -1;
+    public static final int USER_ADD = 1;
+    public static final int USER_SUB = -1;
 
     public static boolean isNotNull(Object data) {
         return data != null;

@@ -15,6 +15,10 @@ public interface UserInfoMapper {
 
     int updateByUserEmail(UserInfo record);
 
+    //更改用户的收藏文章数量
     int updateUserCollectNum(int userId, int count);
+
+    //更改用户的发布文章数量
+    int updateUserArticleNum(String userEmail, int count);
 
 }

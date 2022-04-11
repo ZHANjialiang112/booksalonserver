@@ -14,7 +14,10 @@ public interface BookInfoMapper {
 
     int updateByPrimaryKeySelective(BookInfoWithBLOBs record);
 
+    int updateBookCollCount(@Param("bookId") Integer bookId, @Param("count") Integer count);
+
     int updateBookCommCount(@Param("bookId") Integer bookId, @Param("count") Integer count);
+
 
     List<BookInfoWithBLOBs> queryBookPage(@Param("search") String search);
 
@@ -23,5 +26,4 @@ public interface BookInfoMapper {
     List<BookInfoWithBLOBs> queryUserCollBook(@Param("collUserId") int collUserId);
 
     List<BookInfoWithBLOBs> queryUserAllBook(@Param("userEmail") String userEmail);
-
 }

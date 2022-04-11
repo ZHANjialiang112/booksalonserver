@@ -82,9 +82,9 @@ public class LoginService {
         String value = redisService.get(userInfo.getUserEmail());
         //注册验证验证码并保存用户到数据库
         if (titleType.equals(USER_REGISTER)) {
-            //if (resultUser != null) {
-            //    return AjaxResult.error("该邮箱已经注册，请直接登录！");
-            //}
+            if (resultUser != null) {
+                return AjaxResult.error("该邮箱已经注册，请直接登录！");
+            }
             if (code.equals(value)) {
                 userInfo.setUserPassword(StringUtils.passwordMd5(userInfo.getUserPassword()));
                 userInfo.setNickName("BS_" + UUID.randomUUID().toString().substring(3, 10));

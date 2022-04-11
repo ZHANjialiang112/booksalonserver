@@ -33,7 +33,7 @@ public class BookCommService {
 
     //添加评论
     public AjaxResult addBookComm(BookComment bookComment) {
-        bookInfoMapper.updateBookCommCount(bookComment.getBookId(), StringUtils.USER_ADD_COLLECT);
+        bookInfoMapper.updateBookCommCount(bookComment.getBookId(), StringUtils.USER_ADD);
         bookCommentMapper.insert(bookComment);
         return AjaxResult.success();
     }

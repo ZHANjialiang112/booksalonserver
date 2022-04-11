@@ -16,6 +16,7 @@ public class UserInfoService {
     @Resource
     private UserInfoMapper userInfoMapper;
 
+    //查询用户信息
     public AjaxResult queryUser(String userEmail) {
         UserInfo userInfo = userInfoMapper.queryUserByEmail(userEmail);
         if (userInfo == null) {
@@ -24,7 +25,8 @@ public class UserInfoService {
         return AjaxResult.success(userInfo);
     }
 
-    public Boolean userIsExist() {
-        return true;
+    //用户修改头像背景和昵称
+    public AjaxResult updateUserInfo(UserInfo userInfo) {
+        return userInfoMapper.updateByUserEmail(userInfo) > 0 ? AjaxResult.success("修改成功") : AjaxResult.error("修改失败");
     }
 }

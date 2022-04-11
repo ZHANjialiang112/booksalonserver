@@ -45,8 +45,8 @@ public class BookCollService {
         bookCollect.setCollUserId(collUserId);
         bookCollect.setBctUserId(userInfoMapper.queryUserByEmail(userEmail).getUserId());
         bookCollectMapper.insertSelective(bookCollect);
-        bookInfoMapper.updateBookCommCount(bctBookId, StringUtils.USER_ADD_COLLECT);
-        userInfoMapper.updateUserCollectNum(collUserId, StringUtils.USER_ADD_COLLECT);
+        bookInfoMapper.updateBookCollCount(bctBookId, StringUtils.USER_ADD);
+        userInfoMapper.updateUserCollectNum(collUserId, StringUtils.USER_ADD);
         return AjaxResult.success("收藏成功");
     }
 
@@ -64,8 +64,8 @@ public class BookCollService {
         bookCollect.setCollUserId(collUserId);
         bookCollect.setBctUserId(userInfoMapper.queryUserByEmail(userEmail).getUserId());
         bookCollectMapper.deleteCollect(bookCollect);
-        bookInfoMapper.updateBookCommCount(bctBookId, StringUtils.USER_CANCEL_COLLECT);
-        userInfoMapper.updateUserCollectNum(collUserId, StringUtils.USER_CANCEL_COLLECT);
+        bookInfoMapper.updateBookCollCount(bctBookId, StringUtils.USER_SUB);
+        userInfoMapper.updateUserCollectNum(collUserId, StringUtils.USER_SUB);
         return AjaxResult.success("取消收藏成功");
     }
 

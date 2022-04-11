@@ -2,13 +2,19 @@ package com.zjl.booksalon.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zjl.booksalon.commons.result.AjaxResult;
+import com.zjl.booksalon.commons.utils.StringUtils;
 import com.zjl.booksalon.entity.BookCollect;
 import com.zjl.booksalon.entity.BookInfoWithBLOBs;
+import com.zjl.booksalon.entity.UserInfo;
 import com.zjl.booksalon.mapper.BookCollectMapper;
 import com.zjl.booksalon.mapper.BookInfoMapper;
+import com.zjl.booksalon.mapper.UserInfoMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Auther: ZJL
@@ -22,6 +28,8 @@ public class BookService {
     private BookInfoMapper bookInfoMapper;
     @Resource
     private BookCollectMapper bookCollectMapper;
+    @Resource
+    private UserInfoMapper userInfoMapper;
 
     /**
      * 查询推荐页书籍信息用户是否已经收藏
@@ -64,9 +72,27 @@ public class BookService {
         return hotBookPage;
     }
 
+    //个人首页展示自己所有的书籍
     public PageInfo<BookInfoWithBLOBs> getUserAllBook(String userEmail, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        return new PageInfo<>(bookInfoMapper.queryUserAllBook(userEmail));
+        UserInfo userInfo = userInfoMapper.queryUserByEmail(userEmail);
+        List<BookInfoWithBLOBs> bookInfoWithBLOBs = bookInfoMapper.queryUserAllBook(userEmail);
+        for (BookInfoWithBLOBs bookInfoWithBLOB : bookInfoWithBLOBs) {
+            BookCollect bookCollect = new BookCollect();
+            bookCollect.setCollUserId(userInfo.getUserId());
+            bookCollect.setBctBookId(bookInfoWithBLOB.getBookId());
+            if (bookCollectMapper.queryCollectStatus(bookCollect) > 0) {
+                bookInfoWithBLOB.setCurrUserCollect("1");
+            }
+        }
+        return new PageInfo<>(bookInfoWithBLOBs);
+    }
+
+    @Transactional
+    public AjaxResult userAddNewBook(BookInfoWithBLOBs bookInfoWithBLOBs) {
+        userInfoMapper.updateUserArticleNum(bookInfoWithBLOBs.getUserEmail(), StringUtils.USER_ADD);
+        bookInfoMapper.insertNewBook(bookInfoWithBLOBs);
+        return AjaxResult.success("添加文章成功");
     }
 
 }
