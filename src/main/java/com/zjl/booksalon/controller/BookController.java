@@ -37,6 +37,18 @@ public class BookController {
         return AjaxResult.success(bookService.userAddNewBook(bookInfoWithBLOBs));
     }
 
+    //更新书籍信息
+    @PostMapping("/updateBook")
+    public AjaxResult updateBook(@RequestBody BookInfoWithBLOBs bookInfoWithBLOBs) {
+        return AjaxResult.success(bookService.userUpdateBook(bookInfoWithBLOBs));
+    }
+
+    //删除书籍
+    @PostMapping("/deleteBook")
+    public AjaxResult deleteBook(@RequestParam("bookId") int bookId, @RequestParam("userEmail") String userEmail) {
+        return AjaxResult.success(bookService.userDeleteBook(bookId, userEmail));
+    }
+
 
     //获取前端上传的图片文件
     @PostMapping("/imgUpload")

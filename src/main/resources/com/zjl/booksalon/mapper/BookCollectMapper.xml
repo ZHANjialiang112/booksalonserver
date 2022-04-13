@@ -33,11 +33,17 @@
     </insert>
     <delete id="deleteCollect">
         delete from book_collect
-        where coll_user_id = #{collUserId,jdbcType=INTEGER}
-        and bct_book_id = #{bctBookId,jdbcType=INTEGER}
-        <if test="bctUserId != null and bctUserId != ''">
-            and bct_user_id = #{bctUserId,jdbcType=INTEGER}
-        </if>
+        <where>
+            <if test="collUserId != null and collUserId != ''">
+                and coll_user_id = #{collUserId,jdbcType=INTEGER}
+            </if>
+            <if test="bctBookId != null and bctBookId != ''">
+                and bct_book_id = #{bctBookId,jdbcType=INTEGER}
+            </if>
+            <if test="bctUserId != null and bctUserId != ''">
+                and bct_user_id = #{bctUserId,jdbcType=INTEGER}
+            </if>
+        </where>
     </delete>
     <select id="queryCollectStatus" resultType="java.lang.Integer">
         select count(*) from book_collect
@@ -46,5 +52,10 @@
         <if test="bctUserId != null and bctUserId != ''">
             and bct_user_id = #{bctUserId,jdbcType=INTEGER}
         </if>
+    </select>
+    <select id="queryAllUserIdList" resultType="java.lang.Integer">
+        select coll_user_id
+        from book_collect
+        where bct_book_id = #{bctBookId,jdbcType=INTEGER}
     </select>
 </mapper>

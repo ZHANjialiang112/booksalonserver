@@ -12,7 +12,7 @@ public interface BookInfoMapper {
 
     BookInfoWithBLOBs selectByPrimaryKey(Integer bookId);
 
-    int updateByPrimaryKeySelective(BookInfoWithBLOBs record);
+    int updateBookInfoById(BookInfoWithBLOBs record);
 
     int updateBookCollCount(@Param("bookId") Integer bookId, @Param("count") Integer count);
 

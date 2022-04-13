@@ -7,9 +7,7 @@ import com.zjl.booksalon.commons.utils.StringUtils;
 import com.zjl.booksalon.entity.BookCollect;
 import com.zjl.booksalon.entity.BookInfoWithBLOBs;
 import com.zjl.booksalon.entity.UserInfo;
-import com.zjl.booksalon.mapper.BookCollectMapper;
-import com.zjl.booksalon.mapper.BookInfoMapper;
-import com.zjl.booksalon.mapper.UserInfoMapper;
+import com.zjl.booksalon.mapper.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +28,11 @@ public class BookService {
     private BookCollectMapper bookCollectMapper;
     @Resource
     private UserInfoMapper userInfoMapper;
+    @Resource
+    private BookCommentMapper bookCommentMapper;
+    @Resource
+    private HotBookMapper hotBookMapper;
+
 
     /**
      * 查询推荐页书籍信息用户是否已经收藏
@@ -88,11 +91,37 @@ public class BookService {
         return new PageInfo<>(bookInfoWithBLOBs);
     }
 
+    //用户添加书籍
     @Transactional
     public AjaxResult userAddNewBook(BookInfoWithBLOBs bookInfoWithBLOBs) {
         userInfoMapper.updateUserArticleNum(bookInfoWithBLOBs.getUserEmail(), StringUtils.USER_ADD);
         bookInfoMapper.insertNewBook(bookInfoWithBLOBs);
         return AjaxResult.success("添加文章成功");
+    }
+
+    //更新书籍信息
+    public AjaxResult userUpdateBook(BookInfoWithBLOBs bookInfoWithBLOBs) {
+        bookInfoMapper.updateBookInfoById(bookInfoWithBLOBs);
+        return AjaxResult.success("更新文章成功");
+    }
+
+    //删除书籍
+    @Transactional
+    public AjaxResult userDeleteBook(int bookId, String userEmail) {
+        userInfoMapper.updateUserArticleNum(userEmail, StringUtils.USER_SUB);
+        bookCommentMapper.deleteCommentById(bookId);
+        hotBookMapper.deleteByHtBookId(bookId);
+        List<Integer> integers = bookCollectMapper.queryAllUserIdList(bookId);
+        if (integers.size() > 0) {
+            for (Integer integer : integers) {
+                userInfoMapper.updateUserCollectNum(integer, StringUtils.USER_SUB);
+            }
+        }
+        BookCollect bookCollect = new BookCollect();
+        bookCollect.setBctBookId(bookId);
+        bookCollectMapper.deleteCollect(bookCollect);
+        bookInfoMapper.deleteByPrimaryKey(bookId);
+        return AjaxResult.success("删除文章成功");
     }
 
 }

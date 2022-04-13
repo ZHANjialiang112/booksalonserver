@@ -28,4 +28,9 @@
             </if>
         </trim>
     </insert>
+    <delete id="deleteByHtBookId">
+        delete
+        from hot_book
+        where ht_book_id = #{htBookId,jdbcType=INTEGER}
+    </delete>
 </mapper>

@@ -64,6 +64,11 @@
             </if>
         </trim>
     </insert>
+    <delete id="deleteCommentById">
+        delete
+        from book_comment
+        where book_id = #{bookId,jdbcType=INTEGER}
+    </delete>
     <select id="selectCommByBkName" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Blob_Column_List"/>

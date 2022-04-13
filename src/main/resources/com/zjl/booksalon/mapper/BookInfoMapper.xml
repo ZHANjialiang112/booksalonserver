@@ -189,7 +189,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.zjl.booksalon.entity.BookInfoWithBLOBs">
+    <update id="updateBookInfoById" parameterType="com.zjl.booksalon.entity.BookInfoWithBLOBs">
         update book_info
         <set>
             <if test="bookName != null">

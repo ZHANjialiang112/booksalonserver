@@ -10,4 +10,6 @@ public interface BookCommentMapper {
     int insertSelective(BookComment record);
 
     List<BookComment> selectCommByBkName(String bookName);
+
+    int deleteCommentById(int bookId);
 }

@@ -6,4 +6,6 @@ public interface HotBookMapper {
     int insert(HotBook record);
 
     int insertSelective(HotBook record);
+
+    int deleteByHtBookId(int htBookId);
 }
